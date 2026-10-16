@@ -3,7 +3,7 @@
 import pygame
 from typing import NamedTuple
 from card import Card
-from constants import(BODY_COLOR, CARD_RED,CARD_BLACK, OUTLINE_COLOR, SUITS, RANKS)
+from constants import(BODY_COLOR, CARD_BACK, CARD_RED,CARD_BLACK, OUTLINE_COLOR, SUITS, RANKS)
 
 
 rank_map: dict[str, str] = {
@@ -72,3 +72,15 @@ class CardRenderer():
                          border_radius=self.radius,
                          width=self.outline_width)
         return surf
+    
+    def back(self) -> pygame.Surface:
+        base = self._blank_card()
+        margin = self.inset
+        border_inset = base.get_rect().inflate(-2*margin, -2*margin)
+        pygame.draw.rect(base,
+                         CARD_BACK,
+                         border_inset,
+                         border_radius=max(1,self.radius - 3))
+        return base.convert_alpha()
+        
+        
