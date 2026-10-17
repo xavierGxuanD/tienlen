@@ -44,6 +44,28 @@ class Hand(Sequence[Card]):
             player_hand_rects.append((card, rect))
         return player_hand_rects
 
+    def column(self,
+               card_size: tuple[int, int],
+               max_height: int,
+               max_step: int,
+               center_y: int,
+               left: int
+               ) -> list[tuple[Card, pygame.Rect]]:
+        width, height = card_size
+
+        if len(self) > 1:
+            step = min(max_step, (max_height - height) // (len(self) - 1))
+        else:
+            step = max_step
+        column_height = height + (len(self) - 1) * step
+        top_edge = center_y - (column_height // 2)
+        column_rects = []
+        for idx, card in enumerate(self._cards):
+            y = top_edge + idx * step
+            rect = pygame.Rect(left, y, width, height)
+            column_rects.append((card, rect))
+        return column_rects
+
     def without(self, removed_cards: set[Card]):
         new_hand_list = []
         for card in self:

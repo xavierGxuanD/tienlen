@@ -27,6 +27,7 @@ def main():
 
     # card back render
     card_back = temp0.back()
+    card_back_sideways = pygame.transform.rotate(card_back, 90)
     
     #init game
     card_piles = originaldeck.deal(4)
@@ -82,6 +83,25 @@ def main():
                                     max_step,
                                     screen_rect.centerx,
                                     230)
+
+    #layot side opponents
+    side_margin = 20
+    side_max_height = 430
+
+    # helper functions for the side opponents (seat 1 left, seat 3 right)
+    def layout_left_opponent():
+        return game.hands[1].column(card_back_sideways.get_size(),
+                                    side_max_height,
+                                    max_step,
+                                    245,
+                                    side_margin)
+
+    def layout_right_opponent():
+        return game.hands[3].column(card_back_sideways.get_size(),
+                                    side_max_height,
+                                    max_step,
+                                    245,
+                                    SCREEN_WIDTH - side_margin - card_back_sideways.get_width())
     
     # game running basics
     clock = pygame.time.Clock()
@@ -100,6 +120,8 @@ def main():
         layout["player"] = layout_player()
         layout["pile"] = layout_center_pile()
         layout["top"] = layout_top_opponent()
+        layout["left"] = layout_left_opponent()
+        layout["right"] = layout_right_opponent()
     relayout()
     # Game Loop
     while True:
@@ -160,7 +182,16 @@ def main():
         #blit top opponent hand, showing card back
         for _, rect in layout["top"]:
             screen.blit(card_back, rect)
+
+        #blit side opponents
+        for _, rect in layout["left"]:
+            screen.blit(card_back_sideways, rect)
+        for _, rect in layout["right"]:
+            screen.blit(card_back_sideways, rect)
+            
         pygame.display.flip()
+
+        
 
         dt = clock.tick(60) / 1000
         
