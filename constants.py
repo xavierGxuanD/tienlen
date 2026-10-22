@@ -3,6 +3,10 @@
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
+# Button constants
+BUTTON_TEXT = (255, 255, 255)
+BUTTON_HIGHLIGHT = (230, 205, 59)
+
 # Card Constants
 CARD_W = 150
 CARD_H = round(CARD_W * 7 / 5)

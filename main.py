@@ -2,7 +2,7 @@ import pygame
 import sys
 from cardrender import CardRenderer
 from deck import Deck
-from constants import (SCREEN_HEIGHT, SCREEN_WIDTH, CARD_W, CARD_H)
+from constants import (SCREEN_HEIGHT, SCREEN_WIDTH, CARD_W, CARD_H, BUTTON_TEXT, BUTTON_HIGHLIGHT)
 from hand import (Hand)
 from rules import (beats)
 from bot import choose_play
@@ -12,6 +12,7 @@ from game import Game
 
 def main():
     pygame.init()
+    button_font = pygame.font.Font(None, 32)
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     screen_rect = screen.get_rect()
 
@@ -33,6 +34,14 @@ def main():
     card_piles = originaldeck.deal(4)
     game = Game(card_piles)
 
+    # button maker
+    def make_button(text, **anchor):
+        surf = button_font.render(text, True, BUTTON_TEXT)
+        return surf, surf.get_rect(**anchor)
+
+    #init butons
+    
+    
     # bot runner
 
     def bot_move():
