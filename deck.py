@@ -7,6 +7,11 @@ from hand import (Hand)
 from constants import (SUITS,RANKS)
 
 class Deck():
+    """A class to represent a deck of cards, in "new deck order" set by RANK, then SUIT.
+
+    Attributes:
+        
+    """
     def __init__(self, seed: int | None=None) -> None:
         self.seed = seed
 

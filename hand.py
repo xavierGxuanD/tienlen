@@ -98,6 +98,11 @@ class Hand(Sequence[Card]):
         return column_rects
 
     def without(self, removed_cards: set[Card]):
+        """Produces a hand without the designated cards. 
+
+        Attributes:
+             removed_cards: A set of cards to be removed from the hand. 
+        """
         new_hand_list = []
         for card in self:
             if card not in removed_cards:
