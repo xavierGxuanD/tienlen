@@ -6,7 +6,17 @@ from typing import (Iterable)
 import pygame
 
 class Hand(Sequence[Card]):
+    """A class to represent a player's hand, and provide methods to layout for pygame. 
+
+    Attributes:
+        cards (Iterable[Card]): The cards in a player's hand.
+    """
     def __init__(self, cards: Iterable[Card] ) -> None:
+        """Initialize a player's hand.
+
+        Attributes:
+            cards (Iterable[Card]) (private):  The cards in a player's hand. Sorted in Tien Len deck order.
+        """
         self._cards = sorted(cards)
 
     def __getitem__(self, key):
@@ -28,12 +38,23 @@ class Hand(Sequence[Card]):
                center_x: int,
                bottom: int
                ) -> list[tuple[Card, pygame.Rect]]:
+        """Calculated the layout for a horizontally displayed hand, adjusting spacing between cards, and width of card fan. 
+
+        Attributes:
+            card_size: WxH pixel dimensions of card.
+            max_width: px width of card fan at max size
+            max_step: maximum space between centers of cards. This controls the spread of cards when the hand is running lower on cards.
+            center_x: X Location of the middle of the card fan.
+            bottom: Y Location of the bottom of the card fan. 
+        """
+        
         width, height = card_size
 
         if len(self) > 1:
             step = min(max_step, (max_width - width) // (len(self) - 1))
         else:
             step = max_step
+            
         fan_width = width + (len(self) - 1)*step
         left_edge = center_x - (fan_width // 2)
         player_hand_rects = []
@@ -51,6 +72,16 @@ class Hand(Sequence[Card]):
                center_y: int,
                left: int
                ) -> list[tuple[Card, pygame.Rect]]:
+        """Calculated the layout for vertically displayed hand, adjusting spacing between cards, and width of card fan. 
+
+        Attributes:
+            card_size: WxH pixel dimensions of card.
+            max_width: px width of card fan at max size
+            max_step: maximum space between centers of cards. This controls the spread of cards when the hand is running lower on cards.
+            center_x: X Location of the middle of the card fan.
+            bottom: Y Location of the bottom of the card fan. 
+        """
+        
         width, height = card_size
 
         if len(self) > 1:
